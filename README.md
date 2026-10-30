@@ -1,6 +1,6 @@
 # Password Manager: Java Swing + browser edition
 
-This repository keeps the original Java Swing project in `desktop/` and adds **Keyspace**, a browser-only password-vault demo.
+This repository keeps the original Java Swing project in `desktop-source.zip` and adds **Keyspace**, a browser-only password-vault demo.
 
 ## Live website
 
@@ -19,13 +19,13 @@ The website is a new browser implementation of the project's core workflow, not 
 
 ## Run locally
 
-Serve this folder over localhost, for example with `python -m http.server 8080`, then open `http://localhost:8080`. Web Crypto requires HTTPS or localhost. No package installation or build is needed.
+Serve the website folder over localhost, for example with `python -m http.server 8080`, then open `http://localhost:8080`. Web Crypto requires HTTPS or localhost. No package installation or build is needed.
 
 ## Storage and encryption
 
 The browser uses Web Crypto: PBKDF2-HMAC-SHA-256 with 600,000 iterations and a random 16-byte salt derives an AES-256-GCM key from the master password. Every save uses a fresh random 12-byte IV. The encrypted vault is kept in localStorage; the master password is not persisted. App names, usernames, passwords and notes are all inside the encrypted payload.
 
-There is no backend, registration service, analytics or automatic syncing. Each browser profile, origin and device has a separate vault. Public repository visitors do not see other people's locally stored vaults.
+There is no backend, registration service, analytics or automatic syncing. Each browser profile, origin and device has a separate vault. Public repository visitors do not see other people's locally stored vaults. Browser storage is shared by origin, so other sites under the same GitHub Pages hostname can access the encrypted storage; repository paths are not a security boundary. Use a dedicated origin for any real vault.
 
 ## Important limits
 
@@ -42,8 +42,8 @@ There is no backend, registration service, analytics or automatic syncing. Each 
 
 ## Original Java desktop project
 
-`desktop/` contains the supplied Maven project and its tests. Build outputs, IDE automation hooks and screenshots were excluded. Source files were preserved without converting the Java desktop code itself.
+`desktop-source.zip` contains the supplied Maven project and its tests. Build outputs, IDE automation hooks and screenshots were excluded. Source files were preserved without converting the Java desktop code itself.
 
-The original project specifies JDK 25 and requires MySQL plus `DB_URL`, `DB_USER`, `DB_PASSWORD` and a Base64-encoded 32-byte `PM_AES_KEY`. See `desktop/README.md` and the Java source. No real credentials or encryption keys are included. The ZIP did not supply a database schema, so the desktop setup is not a turnkey deployment.
+The original project specifies JDK 25 and requires MySQL plus `DB_URL`, `DB_USER`, `DB_PASSWORD` and a Base64-encoded 32-byte `PM_AES_KEY`. After extracting it, see its `README.md` and Java source. No real credentials or encryption keys are included. The ZIP did not supply a database schema, so the desktop setup is not a turnkey deployment.
 
 This repository does not claim that the original Java app was executed or that its tests were rerun. The browser version is deployed separately as a static GitHub Pages site.
